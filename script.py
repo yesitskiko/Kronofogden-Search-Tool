@@ -1,73 +1,48 @@
-import requests
-from bs4 import BeautifulSoup
-from tabulate import tabulate
-
-cookies = {}
-
-headers = {
-    'Connection': 'keep-alive',
-    'Cache-Control': 'max-age=0',
-    'sec-ch-ua': '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
-    'sec-ch-ua-mobile': '?0',
-    'Upgrade-Insecure-Requests': '1',
-    'Origin': 'https://auktion.kronofogden.se',
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    'Sec-Fetch-Site': 'same-origin',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-User': '?1',
-    'Sec-Fetch-Dest': 'document',
-    'Referer': 'https://auktion.kronofogden.se/auk/w.objectlist?inC=KFM&inA=WEB',
-    'Accept-Language': 'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7',
-}
-
-params = (
-    ('inC', 'KFM'),
-    ('inA', 'WEB'),
-)
-
-Results = []
-
-inpt = input("Skriv fraser: ")
-words = inpt.split(", ")
-if len(words) == 0:
-  words.insert(0, inpt)
-for Index, Word in enumerate(words):
-  data = {
-    'inCategoryId': '',
-    'inPageNo': '1',
-    'inSearchCrit': '0',
-    'inSiteLang': '',
-    'inSelectedSort': '',
-    'inSearchText': str(Word)
-  }
-
-  response = requests.post('https://auktion.kronofogden.se/auk/w.objectlist', headers=headers, params=params, cookies=cookies, data=data)
-  if response.text.find('Tyvärr så gav din sökning på "{0}" inga träffar just nu!'.format(Word)) > -1:
-    print(Word, "existerar inte i kronofogdens marknad.")
-  else:
-    soup = BeautifulSoup(response.content, 'html.parser')
-    for Index, Item in enumerate(list(list(list(list(soup.children)[1].children)[1])[0])[11]):
-      Item  = list(list(Item.children)[0])
-      Items = list(Item[2])[0]
-      if not(len(list(Items)) > 3): 
-        Val = list(list(Items)[2])[0]
-        TId = list(Val)[1].text
-        Name = list(Val)[2]
-        if Name == " ":
-          Name = "{0}{1}".format(list(Val)[3].text, list(Val)[4])
-        for _, Val2 in enumerate(list(Val)):
-          if str(Val2).find("Utrop") > -1:
-            Results.insert(0, [ Word, TId[0:-1], Name, list(Val2)[len(list(Val2)) - 1].text])
-        continue
-      for Idx, Val in enumerate(list(Items)[3]):
-        TId = list(Val)[1].text
-        Name = list(Val)[2]
-        if Name == " ":
-          Name = "{0}{1}".format(list(Val)[3].text, list(Val)[4])
-        for _, Val2 in enumerate(list(Val)):
-          if str(Val2).find("Utrop") > -1:
-            Results.insert(0, [ Word, TId[0:-1], Name, list(Val2)[len(list(Val2)) - 1].text])
-
-print(tabulate(Results, headers=["Sökord", "Id", "Namn", "Högsta Bud"], tablefmt='orgtbl'))
+k='Utrop'
+j='{0}{1}'
+i='1'
+h=print
+g=int
+f=input
+V=' '
+U=''
+T=str
+M=len
+F=enumerate
+A=list
+import requests as W
+from bs4 import BeautifulSoup as X
+from tabulate import tabulate as Y
+Z={}
+a={'Connection':'keep-alive','Cache-Control':'max-age=0','sec-ch-ua':'" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"','sec-ch-ua-mobile':'?0','Upgrade-Insecure-Requests':i,'Origin':'https://auktion.kronofogden.se','Content-Type':'application/x-www-form-urlencoded','User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36','Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9','Sec-Fetch-Site':'same-origin','Sec-Fetch-Mode':'navigate','Sec-Fetch-User':'?1','Sec-Fetch-Dest':'document','Referer':'https://auktion.kronofogden.se/auk/w.objectlist?inC=KFM&inA=WEB','Accept-Language':'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7'}
+b=('inC','KFM'),('inA','WEB')
+H=[]
+N=f("Vänligen fyll i sökord som du vill söka efter.\nOm du är ute efter flera olika artiklar separera varje sökord med ', '.\nSökord: ")
+G=0
+try:G=g(f('Vänligen fyll i det högsta betalbara priset du har tänkt dig.\nOm du inte vill filtrera artiklar efter pris kan du skriva 0 eller trycka på Enter tangenten.\nPris: '))
+except Exception as O:G=0
+I=N.split(', ')
+if M(I)==0:I.insert(0,N)
+for (P,E) in F(I):
+	c={'inCategoryId':U,'inPageNo':i,'inSearchCrit':'0','inSiteLang':U,'inSelectedSort':U,'inSearchText':T(E)};Q=W.post('https://auktion.kronofogden.se/auk/w.objectlist',headers=a,params=b,cookies=Z,data=c)
+	if Q.text.find('Tyvärr så gav din sökning på "{0}" inga träffar just nu!'.format(E))>-1:h(E,'existerar inte i kronofogdens marknad.')
+	else:
+		d=X(Q.content,'html.parser')
+		for (P,J) in F(A(A(A(A(d.children)[1].children)[1])[0])[11]):
+			J=A(A(J.children)[0]);K=A(J[2])[0]
+			if not M(A(K))>3:
+				B=A(A(K)[2])[0];L=A(B)[1].text;C=A(B)[2]
+				if C==V:C=j.format(A(B)[3].text,A(B)[4])
+				for (O,D) in F(A(B)):
+					if T(D).find(k)>-1:H.insert(0,[E,L[0:-1],C,A(D)[M(A(D))-1].text])
+				continue
+			for (l,B) in F(A(K)[3]):
+				L=A(B)[1].text;C=A(B)[2]
+				if C==V:C=j.format(A(B)[3].text,A(B)[4])
+				for (O,D) in F(A(B)):
+					if T(D).find(k)>-1:H.insert(0,[E,L[0:-1],C,A(D)[M(A(D))-1].text])
+R=[]
+for (P,S) in F(H):
+	e=g(S[3].split(V)[0])
+	if G==0 or e<G:R.insert(0,S)
+h(Y(R,headers=['Sökord','Id','Artikel','Högsta Bud'],tablefmt='orgtbl'))
