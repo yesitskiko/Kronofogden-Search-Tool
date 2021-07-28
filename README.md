@@ -14,6 +14,7 @@ Skriv fraser: vapen
 ```
 
 # To-do
+- [x] Implement a check for amount of children before indexing.
 - [ ] Make the process multi-threaded to improve speed when searching for multiple keywords.
 - [ ] Make the process work on multiple pages, as of now it only scans one page at a time.
 - [ ] Make the process of scanning multiple pages multi-threaded, once it's supported.
