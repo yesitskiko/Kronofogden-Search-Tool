@@ -17,4 +17,3 @@ Skriv fraser: vapen
 - [ ] Make the process multi-threaded to improve speed when searching for multiple keywords.
 - [ ] Make the process work on multiple pages, as of now it only scans one page at a time.
 - [ ] Make the process of scanning multiple pages multi-threaded, once it's supported.
-- [x] Test
