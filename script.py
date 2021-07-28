@@ -51,6 +51,7 @@ for Index, Word in enumerate(words):
     for Index, Item in enumerate(list(list(list(list(soup.children)[1].children)[1])[0])[11]):
       Item  = list(list(Item.children)[0])
       Items = list(Item[2])[0]
+      if not(len(list(Items)) > 3): continue
       for Idx, Val in enumerate(list(Items)[3]):
         TId = list(Val)[1].text
         Name = list(Val)[2]
