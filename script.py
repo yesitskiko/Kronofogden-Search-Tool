@@ -51,7 +51,16 @@ for Index, Word in enumerate(words):
     for Index, Item in enumerate(list(list(list(list(soup.children)[1].children)[1])[0])[11]):
       Item  = list(list(Item.children)[0])
       Items = list(Item[2])[0]
-      if not(len(list(Items)) > 3): continue
+      if not(len(list(Items)) > 3): 
+        Val = list(list(Items)[2])[0]
+        TId = list(Val)[1].text
+        Name = list(Val)[2]
+        if Name == " ":
+          Name = "{0}{1}".format(list(Val)[3].text, list(Val)[4])
+        for _, Val2 in enumerate(list(Val)):
+          if str(Val2).find("Utrop") > -1:
+            Results.insert(0, [ Word, TId[0:-1], Name, list(Val2)[len(list(Val2)) - 1].text])
+        continue
       for Idx, Val in enumerate(list(Items)[3]):
         TId = list(Val)[1].text
         Name = list(Val)[2]
